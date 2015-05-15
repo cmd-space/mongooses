@@ -36,13 +36,23 @@ app.get('/', function(req, res) {
 app.get('/mongooses/new', function(req, res){
     res.render('new');
 });
-app.get('/mongooses/:id', function(req, res) {
-    Mongoose.find({_id: req.param.id}, function(err, mongoose){
+app.get("/mongooses/:id", function(req, res) {
+    console.log(req.params.id);
+    Mongoose.findOne({_id: req.params.id}, function(err, mongoose){
         if(err){
             console.log(err);
         } else{
             res.render('id', {mongoose: mongoose});
         };
+    });
+});
+app.get("/mongooses/:id/edit", function(req, res){
+    Mongoose.findOne({_id: req.params.id}, function(err, mongoose){
+        if(err){
+            console.log(err);
+        } else{
+            res.render('edit', {mongoose: mongoose});
+        }
     });
 });
 
@@ -58,6 +68,10 @@ app.post('/mongooses', function(req, res){
             res.redirect('/');
         }
     });
+});
+app.post("/mongooses/:id", function(req, res){
+    console.log("POST DATA", req.body);
+    res.redirect('/');
 });
 
 // listen on 8000

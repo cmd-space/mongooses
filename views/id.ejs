@@ -7,10 +7,12 @@
 </head>
 <body>
     <h3>
-       <%= mongoose.name + '<br>' +
-        mongoose.length + '<br>' +
-        mongoose.gender + '<br>' +
-        mongoose.age %>
+        Name: <%= mongoose.name %> <br>
+        Length: <%= mongoose.length %> <br>
+        Gender: <%= mongoose.gender %> <br>
+        Age: <%= mongoose.age %>
     </h3>
+    <a href="/mongooses/<%= mongoose._id %>/edit"><button>Edit Mongoose</button></a>
+    <a href="/mongooses/<%= mongoose._id %>/destroy"><button>Destroy Mongoose</button></a>
 </body>
 </html>
