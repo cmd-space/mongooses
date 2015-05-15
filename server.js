@@ -16,8 +16,39 @@ app.use(express.static(path.join(__dirname, "./static")));
 app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'ejs');
 
+var MongooseSchema = new mongoose.Schema({
+    name: String,
+    length: Number,
+    gender: String,
+    age: Number,
+})
+var Mongoose = mongoose.model('Mongoose', MongooseSchema);
+
 app.get('/', function(req, res) {
-        res.render('index');
+    Mongoose.find({}, function(err, mongooses){
+        if(err){
+            console.log(err);
+        } else{
+            res.render('index', {mongooses: mongooses});
+        };
+    });
+});
+app.get('/mongooses/new', function(req, res){
+    res.render('new');
+});
+
+app.post('/mongooses', function(req, res){
+    console.log("POST DATA", req.body);
+    // create a new mongoose with corresponding post data from mongooses/new
+    var mongoose = new Mongoose({name: req.body.name, length: req.body.length, gender: req.body.gender, age: req.body.age});
+    mongoose.save(function(err){
+        if(err){
+            console.log(mongoose.errors);
+        } else{
+            console.log('successfully added a mongoose!');
+            res.redirect('/');
+        }
+    });
 });
 
 // listen on 8000
