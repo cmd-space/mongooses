@@ -37,7 +37,6 @@ app.get('/mongooses/new', function(req, res){
     res.render('new');
 });
 app.get("/mongooses/:id", function(req, res) {
-    console.log(req.params.id);
     Mongoose.findOne({_id: req.params.id}, function(err, mongoose){
         if(err){
             console.log(err);
@@ -70,8 +69,24 @@ app.post('/mongooses', function(req, res){
     });
 });
 app.post("/mongooses/:id", function(req, res){
-    console.log("POST DATA", req.body);
-    res.redirect('/');
+    Mongoose.update({_id: req.params.id}, {name: req.body.new_name, length: req.body.new_length, gender: req.body.new_gender, age: req.body.new_age}, function(err, mongoose){
+        if(err){
+            console.log(err);
+        } else{
+            console.log(mongoose);
+            res.redirect('/');
+        }
+    });
+});
+app.post("/mongooses/:id/destroy", function(req, res){
+    Mongoose.remove({_id: req.params.id}, function(err, mongoose){
+        if(err){
+            console.log(err);
+        } else{
+            console.log("Successfully removed!");
+            res.redirect('/');
+        }
+    });
 });
 
 // listen on 8000

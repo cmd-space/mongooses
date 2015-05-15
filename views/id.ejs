@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>MONGOOSE!!!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <script>
+        $(document).ready(function(){
+            $('#destroy').click(function(){
+                if(confirm("Are you sure you want to destroy this mongoose? (They're so cute and cuddly!)")){
+                   window.location = "/mongooses/<%= mongoose._id %>/destroy";
+                } else{
+                    console.log('wise choice!');
+                }
+            });
+        });
+    </script>
 </head>
 <body>
+   <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/mongooses/new">Create a Mongoose!</a></li>
+    </ul>
     <h3>
         Name: <%= mongoose.name %> <br>
         Length: <%= mongoose.length %> <br>
@@ -13,6 +29,8 @@
         Age: <%= mongoose.age %>
     </h3>
     <a href="/mongooses/<%= mongoose._id %>/edit"><button>Edit Mongoose</button></a>
-    <a href="/mongooses/<%= mongoose._id %>/destroy"><button>Destroy Mongoose</button></a>
+    <form action="/mongooses/<%= mongoose._id %>/destroy" method="post">
+        <input type="submit" value="Destroy Mongoose">
+    </form>
 </body>
 </html>
