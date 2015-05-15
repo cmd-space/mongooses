@@ -36,6 +36,15 @@ app.get('/', function(req, res) {
 app.get('/mongooses/new', function(req, res){
     res.render('new');
 });
+app.get('/mongooses/:id', function(req, res) {
+    Mongoose.find({_id: req.param.id}, function(err, mongoose){
+        if(err){
+            console.log(err);
+        } else{
+            res.render('id', {mongoose: mongoose});
+        };
+    });
+});
 
 app.post('/mongooses', function(req, res){
     console.log("POST DATA", req.body);

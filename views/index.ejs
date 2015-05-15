@@ -10,7 +10,7 @@
    <img src="/images/mongoose.jpg" alt="MONGOOSE!!!">
    <h2>Display goes below me!</h2>
    <% for(var x in mongooses){ %>
-       <p><%= mongooses[x].name %></p>
+        <p><a href="/mongooses/<%= mongooses[x]._id %>"><%= mongooses[x].name %></a></p>
    <% } %>
 </body>
 </html>
